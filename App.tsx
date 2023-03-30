@@ -1,13 +1,16 @@
 import React from 'react';
-import {SafeAreaView, Text, View} from 'react-native';
+import {SafeAreaView} from 'react-native';
+import {store} from './src/redux/store';
+import {Provider} from 'react-redux';
+import User from './src/components/User';
 
 function App(): JSX.Element {
   return (
-    <SafeAreaView>
-      <View>
-        <Text>Test</Text>
-      </View>
-    </SafeAreaView>
+    <Provider store={store}>
+      <SafeAreaView>
+        <User />
+      </SafeAreaView>
+    </Provider>
   );
 }
 
