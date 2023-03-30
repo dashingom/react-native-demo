@@ -2,8 +2,10 @@
 
 yarn
 
-#for ios
-yarn ios 
+# for ios
 
-#for android
+yarn ios
+
+# for android
+
 yarn android
