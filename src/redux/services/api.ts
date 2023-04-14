@@ -36,22 +36,17 @@ export const api = createApi({
   /**
    * A bare bones base query would just be `baseQuery: fetchBaseQuery({ baseUrl: '/' })`
    */
-  baseQuery: baseQueryWithRetry,
+  baseQuery: baseQuery,
   /**
    * Tag types must be defined in the original API definition
    * for any tags that would be provided by injected endpoints
    */
-  tagTypes: ['User'],
+  tagTypes: [],
+  keepUnusedDataFor: process.env.NODE_ENV !== 'test' ? 60 : 0,
   /**
    * This api has endpoints injected in adjacent files,
    * which is why no endpoints are shown below.
    * If you want all endpoints defined in the same file, they could be included here instead
    */
   endpoints: () => ({}),
-});
-
-export const enhancedApi = api.enhanceEndpoints({
-  endpoints: () => ({
-    getUser: () => 'test',
-  }),
 });

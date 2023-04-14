@@ -18,13 +18,13 @@ const Item: React.FC<iProps> = ({title}) => (
 );
 
 const User: React.FC = () => {
-  const {data: users, isLoading, isError} = useGetUsersQuery();
+  const {data: users, isLoading, isError, error} = useGetUsersQuery();
 
   const renderItem = ({item}: {item: iUser}) => <Item title={item.name} />;
 
   if (isLoading) return <Text>Loading...</Text>;
   if (isError) {
-    return <Text>Something went wrong</Text>;
+    return <Text>{error.data}</Text>;
   }
 
   return (

@@ -1,8 +1,9 @@
 import {rest} from 'msw';
+import {config} from '../../src/redux/app-config';
 import {userMocks} from './userMocks';
 
 export const handlers = [
-  rest.get('https://jsonplaceholder.typicode.com/users', (req, res, ctx) =>
-    res(ctx.status(200), ctx.json<User[]>(userMocks)),
-  ),
+  rest.get(`${config.apiUrl}/users`, (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json<User[]>(userMocks));
+  }),
 ];
