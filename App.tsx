@@ -11,11 +11,11 @@ function App(): JSX.Element {
       <SafeAreaView>
         <ScrollView contentInsetAdjustmentBehavior="automatic">
           <Auth />
-          {/* <Text testID="titleLabel" style={styles.title}>
-          Users
-        </Text> */}
+          <Text testID="titleLabel" style={styles.title}>
+            Users
+          </Text>
 
-          {/* <User /> */}
+          <User />
         </ScrollView>
       </SafeAreaView>
     </Provider>

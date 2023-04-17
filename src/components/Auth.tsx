@@ -10,7 +10,7 @@ import {
   getUserFromIdToken,
   EventEmitter,
 } from '@okta/okta-react-native';
-import configFile from '../../auth.config';
+import octaConfig from '../../auth.config';
 
 export default class Auth extends Component {
   constructor() {
@@ -33,19 +33,19 @@ export default class Auth extends Component {
       that.setContext('Logged out!');
     });
     EventEmitter.addListener('onError', function (e: Event) {
-      console.error(e);
+      console.warn(e);
       that.setContext(e.error_message);
     });
     EventEmitter.addListener('onCancelled', function (e: Event) {
       console.warn(e);
     });
     await createConfig({
-      clientId: configFile.oidc.clientId,
-      redirectUri: configFile.oidc.redirectUri,
-      endSessionRedirectUri: configFile.oidc.endSessionRedirectUri,
-      discoveryUri: configFile.oidc.discoveryUri,
-      scopes: configFile.oidc.scopes,
-      requireHardwareBackedKeyStore: configFile.oidc.requireHardwareBackedKeyStore,
+      clientId: octaConfig.oidc.clientId,
+      redirectUri: octaConfig.oidc.redirectUri,
+      endSessionRedirectUri: octaConfig.oidc.endSessionRedirectUri,
+      discoveryUri: octaConfig.oidc.discoveryUri,
+      scopes: octaConfig.oidc.scopes,
+      requireHardwareBackedKeyStore: octaConfig.oidc.requireHardwareBackedKeyStore,
     });
     await this.checkAuthentication();
   }
