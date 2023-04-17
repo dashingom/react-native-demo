@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, Text} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet, Text} from 'react-native';
 import {store} from './src/redux/store';
 import {Provider} from 'react-redux';
 import Auth from './src/components/Auth';
@@ -9,12 +9,14 @@ function App(): JSX.Element {
   return (
     <Provider store={store}>
       <SafeAreaView>
-        <Auth />
-        <Text testID="titleLabel" style={styles.title}>
+        <ScrollView contentInsetAdjustmentBehavior="automatic">
+          <Auth />
+          {/* <Text testID="titleLabel" style={styles.title}>
           Users
-        </Text>
+        </Text> */}
 
-        {/* <User /> */}
+          {/* <User /> */}
+        </ScrollView>
       </SafeAreaView>
     </Provider>
   );

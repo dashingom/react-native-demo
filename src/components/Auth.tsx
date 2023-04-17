@@ -33,7 +33,7 @@ export default class Auth extends Component {
       that.setContext('Logged out!');
     });
     EventEmitter.addListener('onError', function (e: Event) {
-      // console.warn(e);
+      console.error(e);
       that.setContext(e.error_message);
     });
     EventEmitter.addListener('onCancelled', function (e: Event) {
@@ -47,7 +47,7 @@ export default class Auth extends Component {
       scopes: configFile.oidc.scopes,
       requireHardwareBackedKeyStore: configFile.oidc.requireHardwareBackedKeyStore,
     });
-    this.checkAuthentication();
+    await this.checkAuthentication();
   }
 
   componentWillUnmount() {
@@ -77,12 +77,12 @@ export default class Auth extends Component {
   }
 
   async getUserIdToken() {
-    let user = await getUserFromIdToken();
+    const user = await getUserFromIdToken();
     this.setContext(JSON.stringify(user, null, 2));
   }
 
   async getMyUser() {
-    let user = await getUser();
+    const user = await getUser();
     this.setContext(JSON.stringify(user, null, 2));
   }
 
