@@ -10,9 +10,9 @@ function App(): JSX.Element {
     <Provider store={store}>
       <SafeAreaView>
         <Auth />
-        {/* <Text testID="titleLabel" style={styles.title}>
+        <Text testID="titleLabel" style={styles.title}>
           Users
-        </Text> */}
+        </Text>
 
         {/* <User /> */}
       </SafeAreaView>
