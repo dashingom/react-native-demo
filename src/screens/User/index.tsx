@@ -1,6 +1,6 @@
 import React from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
-import {useGetUsersQuery} from '../redux/services/user';
+import {useGetUsersQuery} from '../../redux/services/user';
 
 interface iProps {
   title: string;

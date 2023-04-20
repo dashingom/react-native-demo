@@ -8,7 +8,6 @@ import Error from '../../components/Error';
 import {getAccessToken, getUser} from '@okta/okta-react-native';
 // import {useAuth} from '../../context/OktaCustomSignInContext';
 import {useAuth} from '../../context/OktaBrowserSignInContext';
-import User from '../../components/User';
 
 type Props = NativeStackScreenProps<AppStackParamList, 'Profile'>;
 
@@ -22,6 +21,7 @@ const Profile: React.FC<Props> = ({navigation}) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [user, setUser] = useState<User>({});
   const [accessToken, setAccessToken] = useState('');
+  const [context, setContext] = useState('');
   const authState = useAuth();
 
   useEffect(() => {
@@ -37,6 +37,7 @@ const Profile: React.FC<Props> = ({navigation}) => {
     getUser()
       .then((user) => {
         setLoading(false);
+        setContext(JSON.stringify(user, null, 2));
         setUser(user);
       })
       .catch((e) => {
@@ -103,13 +104,7 @@ const Profile: React.FC<Props> = ({navigation}) => {
             </View>
           )}
         </View>
-        <View>
-          <Text testID="titleLabel" style={styles.title}>
-            Users
-          </Text>
-
-          <User />
-        </View>
+        <Text>{context}</Text>
       </SafeAreaView>
     </>
   );
@@ -151,12 +146,5 @@ const styles = StyleSheet.create({
   tokenTitle: {
     fontSize: 16,
     fontWeight: 'bold',
-  },
-  title: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    color: '#0066cc',
-    paddingTop: 40,
-    textAlign: 'center',
   },
 });
