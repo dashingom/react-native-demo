@@ -1,6 +1,6 @@
 import React from 'react';
 import {screen, waitFor} from '@testing-library/react-native';
-import User from '../src/components/User';
+import User from '../src/screens/User';
 import {server} from '../test/server';
 import {rest} from 'msw';
 import {config} from '../src/redux/app-config';
