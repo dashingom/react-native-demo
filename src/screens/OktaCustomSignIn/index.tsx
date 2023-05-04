@@ -1,4 +1,4 @@
-import {ActivityIndicator, Button, StyleSheet, Text, TextInput, View} from 'react-native';
+import {ActivityIndicator, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Error from '../../components/Error';
@@ -9,8 +9,8 @@ import {useAuth} from '../../context/OktaCustomSignInContext';
 type Props = NativeStackScreenProps<AuthStackParamList, 'CustomSignIn'>;
 
 const OktaCustomSignIn: React.FC<Props> = () => {
-  const [username, setUsername] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [username, setUsername] = useState<string>('onkar.nawghare@mailinator.com');
+  const [password, setPassword] = useState<string>('Omkar@123');
   const authState = useAuth();
   const {loading, error} = authState.values;
 
@@ -28,12 +28,9 @@ const OktaCustomSignIn: React.FC<Props> = () => {
     <>
       <SafeAreaView style={styles.container}>
         {loading && <ActivityIndicator />}
-        <Text style={styles.title} testID="titleBox">
-          Native Sign-In
-        </Text>
         <Error error={error} />
-        <View style={styles.buttonContainer}>
-          <View style={styles.button}>
+        <View>
+          <View style={styles.SectionStyle}>
             <TextInput
               value={username}
               style={styles.textInput}
@@ -41,6 +38,8 @@ const OktaCustomSignIn: React.FC<Props> = () => {
               onChangeText={(username) => setUsername(username)}
               testID="usernameTextInput"
             />
+          </View>
+          <View style={styles.SectionStyle}>
             <TextInput
               style={styles.textInput}
               value={password}
@@ -49,10 +48,10 @@ const OktaCustomSignIn: React.FC<Props> = () => {
               onChangeText={(password) => setPassword(password)}
               testID="passwordTextInput"
             />
-            <View style={{marginTop: 40, height: 40}}>
-              <Button onPress={login} title="Login" testID="loginButton" />
-            </View>
           </View>
+          <TouchableOpacity style={styles.buttonStyle} activeOpacity={0.5} onPress={login}>
+            <Text style={styles.buttonTextStyle}>LOGIN</Text>
+          </TouchableOpacity>
         </View>
       </SafeAreaView>
     </>
@@ -62,39 +61,44 @@ const OktaCustomSignIn: React.FC<Props> = () => {
 export default OktaCustomSignIn;
 
 const styles = StyleSheet.create({
-  spinnerTextStyle: {
-    color: '#FFF',
-  },
-  textInput: {
-    marginTop: 10,
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-  },
-  buttonContainer: {
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    marginTop: 10,
-  },
-  button: {
-    borderRadius: 40,
-    width: 200,
-    height: 40,
-    marginTop: 40,
-    marginBottom: 10,
-    marginHorizontal: 10,
-  },
   container: {
     flex: 1,
-    flexDirection: 'column',
-    backgroundColor: '#FFFFFF',
-    alignItems: 'center',
+    justifyContent: 'center',
+    alignContent: 'center',
   },
-  title: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    color: '#0066cc',
-    paddingTop: 40,
-    textAlign: 'center',
+  SectionStyle: {
+    flexDirection: 'row',
+    height: 40,
+    marginTop: 20,
+    marginLeft: 35,
+    marginRight: 35,
+    margin: 10,
+  },
+  textInput: {
+    flex: 1,
+    paddingLeft: 15,
+    paddingRight: 15,
+    borderWidth: 1,
+    borderRadius: 30,
+    borderColor: '#dadae8',
+  },
+  buttonStyle: {
+    backgroundColor: '#007BC1',
+    borderWidth: 0,
+    color: '#FFFFFF',
+    borderColor: '#7DE24E',
+    height: 40,
+    alignItems: 'center',
+    borderRadius: 30,
+    marginLeft: 35,
+    marginRight: 35,
+    marginTop: 20,
+    marginBottom: 25,
+    fontSize: 16,
+  },
+  buttonTextStyle: {
+    color: '#FFFFFF',
+    paddingVertical: 10,
+    fontSize: 16,
   },
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useAuth} from '../../context/OktaBrowserSignInContext';
 
@@ -11,44 +11,25 @@ function OktaBrowserSignIn(): JSX.Element {
         <Text testID="titleLabel" style={styles.title}>
           Okta + React Native Browser Sign In
         </Text>
-        <View style={styles.buttonContainer}>
-          <View style={styles.button}>
-            <Button
-              style={styles.button}
-              testID="loginButton"
-              onPress={() => {
-                authState.actions.login();
-              }}
-              title="Login"
-            />
-          </View>
-        </View>
+        <TouchableOpacity
+          style={styles.buttonStyle}
+          activeOpacity={0.5}
+          onPress={() => {
+            authState.actions.login();
+          }}
+        >
+          <Text style={styles.buttonTextStyle}>Login</Text>
+        </TouchableOpacity>
       </SafeAreaView>
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  buttonContainer: {
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    marginTop: 20,
-  },
-  button: {
-    borderRadius: 40,
-    height: 40,
-    marginTop: 10,
-    marginBottom: 10,
-    marginHorizontal: 10,
-  },
   container: {
     flex: 1,
-    flexDirection: 'column',
-    backgroundColor: '#FFFFFF',
-    alignItems: 'center',
-  },
-  context: {
-    marginTop: 20,
+    justifyContent: 'center',
+    alignContent: 'center',
   },
   title: {
     fontSize: 30,
@@ -57,9 +38,24 @@ const styles = StyleSheet.create({
     paddingTop: 40,
     textAlign: 'center',
   },
-  infoBox: {
-    backgroundColor: 'lightskyblue',
-    borderRadius: 5,
+  buttonStyle: {
+    backgroundColor: '#007BC1',
+    borderWidth: 0,
+    color: '#FFFFFF',
+    borderColor: '#7DE24E',
+    height: 40,
+    alignItems: 'center',
+    borderRadius: 30,
+    marginLeft: 35,
+    marginRight: 35,
+    marginTop: 20,
+    marginBottom: 25,
+    fontSize: 16,
+  },
+  buttonTextStyle: {
+    color: '#FFFFFF',
+    paddingVertical: 10,
+    fontSize: 16,
   },
 });
 

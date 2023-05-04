@@ -1,5 +1,12 @@
 import React, {createContext, useEffect, useState} from 'react';
-import {createConfig, isAuthenticated, clearTokens, signIn} from '@okta/okta-react-native';
+import {
+  createConfig,
+  isAuthenticated,
+  clearTokens,
+  signIn,
+  EventEmitter,
+  getAuthClient,
+} from '@okta/okta-react-native';
 import octaConfig from '../../auth.config';
 
 type AuthContextInterface = {
@@ -14,6 +21,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
   const [authenticated, setAuthenticated] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
+  const [context, setContext] = useState<string | null>(null);
 
   const checkAuthentication = async () => {
     const result = await isAuthenticated();
@@ -23,6 +31,21 @@ const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
   };
 
   useEffect(() => {
+    EventEmitter.addListener('signInSuccess', function (e: Event) {
+      setAuthenticated(true);
+      setContext('Logged in!');
+    });
+    EventEmitter.addListener('signOutSuccess', function (e: Event) {
+      setAuthenticated(false);
+      setContext('Logged out!');
+    });
+    EventEmitter.addListener('onError', function (e: Event) {
+      setContext(e.error_message);
+    });
+    EventEmitter.addListener('onCancelled', function (e: Event) {
+      console.warn(e);
+    });
+
     const getConfig = async () => {
       await createConfig({
         clientId: octaConfig.oidc.clientId,
@@ -36,6 +59,13 @@ const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
 
     void getConfig();
     void checkAuthentication();
+
+    return () => {
+      EventEmitter.removeAllListeners('signInSuccess');
+      EventEmitter.removeAllListeners('signOutSuccess');
+      EventEmitter.removeAllListeners('onError');
+      EventEmitter.removeAllListeners('onCancelled');
+    };
   }, []);
 
   const login = (username: string, password: string) => {
@@ -44,6 +74,25 @@ const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
     }
 
     setLoading(true);
+
+    // getAuthClient()
+    //   .signInWithCredentials({username, password})
+    //   .then((transaction) => {
+    //     setLoading(false);
+    //     const {status, sessionToken} = transaction;
+    //     getAuthClient()
+    //       .isAuthenticated()
+    //       .then((res) => {
+    //         console.log('isAuthenticated', res);
+    //       })
+    //       .catch((e) => {
+    //         console.log('error', e);
+    //       });
+    //   })
+    //   .catch((error) => {
+    //     setLoading(false);
+    //     throw new Error(`Sign in was not authorized - ${JSON.stringify(error)}`);
+    //   });
 
     signIn({username, password})
       .then(() => {
@@ -58,11 +107,14 @@ const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
   };
 
   const logout = () => {
+    setLoading(true);
     clearTokens()
       .then(() => {
+        setLoading(false);
         setAuthenticated(false);
       })
       .catch((e) => {
+        setLoading(false);
         setError(e.message);
       });
   };
@@ -74,6 +126,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
           authenticated,
           loading,
           error,
+          context,
         },
         actions: {
           login: (username: string, password: string): void => login(username, password),

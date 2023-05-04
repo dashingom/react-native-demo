@@ -89,12 +89,7 @@ const Profile: React.FC<Props> = ({navigation}) => {
           </View>
         )}
         <View style={{flexDirection: 'column', marginTop: 20, paddingLeft: 20, width: 300}}>
-          <Button
-            testID="accessButton"
-            style={{marginTop: 40}}
-            title="Get access token"
-            onPress={getOktaAccessToken}
-          />
+          <Button testID="accessButton" title="Get access token" onPress={getOktaAccessToken} />
           {accessToken && (
             <View style={styles.tokenContainer}>
               <Text style={styles.tokenTitle}>Access Token:</Text>
