@@ -99,10 +99,8 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.0",
-        manifestPlaceholders = [
-          appAuthRedirectScheme: 'com.rndemo'
-        ]
+        versionName "2.0",
+        manifestPlaceholders = [ appAuthRedirectScheme: "com.okta.dev-60703092" ]
     }
 
     splits {
