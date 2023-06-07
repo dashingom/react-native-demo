@@ -1,12 +1,9 @@
 import React, {PropsWithChildren} from 'react';
 import {render, RenderOptions} from '@testing-library/react-native';
-import {configureStore} from '@reduxjs/toolkit';
 import type {PreloadedState} from '@reduxjs/toolkit';
 import {Provider} from 'react-redux';
 
-import type {AppStore, RootState} from '../src/redux/store';
-
-import {userApi} from '../src/redux/services/user';
+import {AppStore, RootState, setupStore} from '../src/redux/store';
 
 // This type interface extends the default options for render from RTL, as well
 // as allows the user to specify other things such as initialState, store.
@@ -20,13 +17,7 @@ export function renderWithProviders(
   {
     preloadedState = {},
     // Automatically create a store instance if no store was passed in
-    store = configureStore({
-      reducer: {
-        [userApi.reducerPath]: userApi.reducer,
-      },
-      preloadedState,
-      middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(userApi.middleware),
-    }),
+    store = setupStore(preloadedState),
     ...renderOptions
   }: ExtendedRenderOptions = {},
 ) {
