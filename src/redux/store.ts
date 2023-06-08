@@ -1,16 +1,16 @@
 import {PreloadedState, combineReducers, configureStore} from '@reduxjs/toolkit';
 import {setupListeners} from '@reduxjs/toolkit/dist/query';
-import {userApi} from './services/user';
+import {api} from './services/api';
 
 const rootReducer = combineReducers({
-  [userApi.reducerPath]: userApi.reducer,
+  [api.reducerPath]: api.reducer,
 });
 
 export const setupStore = (preloadedState?: PreloadedState<RootState>) =>
   configureStore({
     reducer: rootReducer,
     preloadedState,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(userApi.middleware),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware),
   });
 
 export const store = setupStore();

@@ -1,4 +1,5 @@
 import 'cross-fetch/polyfill';
+import {fetch, Headers, Request, Response} from 'cross-fetch';
 import {server} from '../test/server';
 import {store} from '../src/redux/store';
 import {api} from '../src/redux/services/api';
@@ -14,7 +15,7 @@ beforeAll(() => server.listen());
 // Reset any request handlers that we may add during the tests,
 // so they don't affect other tests.
 afterEach(() => {
-  server.resetHandlers({onUnhandledRequest: 'error'});
+  server.resetHandlers();
   store.dispatch(api.util.resetApiState());
 });
 

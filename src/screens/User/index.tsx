@@ -25,7 +25,7 @@ const User: React.FC = () => {
 
   if (isLoading) return <Text>Loading...</Text>;
   if (isError) {
-    return <Text>{error.data}</Text>;
+    return <Text>{error.data.message}</Text>;
   }
 
   return (
