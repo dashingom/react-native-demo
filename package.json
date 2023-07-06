@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@brightlayer-ui/react-native-components": "^7.1.0",
-    "@okta/okta-react-native": "^2.8.0",
+    "@okta/okta-react-native": "^2.9.0",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/native-stack": "^6.9.12",
     "@reduxjs/toolkit": "^1.9.3",

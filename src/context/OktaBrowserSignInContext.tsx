@@ -4,19 +4,27 @@ import {
   signInWithBrowser,
   signOut,
   isAuthenticated,
-  getUser,
-  getUserFromIdToken,
   EventEmitter,
 } from '@okta/okta-react-native';
 import oktaConfig from '../../auth.config';
 
+interface Values {
+  authenticated: boolean;
+  context: string | null;
+}
+
+interface Actions {
+  login: () => void;
+  logout: () => void;
+}
+
 type AuthContextInterface = {
-  values: any;
-  actions: any;
+  values: Values;
+  actions: Actions;
 };
 type AuthProviderProps = {children?: React.ReactNode};
 
-export const AuthContext = createContext<AuthContextInterface | null>(null);
+export const AuthContext = createContext<AuthContextInterface | undefined>(undefined);
 
 const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
   const [authenticated, setAuthenticated] = useState<boolean>(false);

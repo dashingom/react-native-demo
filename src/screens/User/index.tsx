@@ -28,6 +28,10 @@ const User: React.FC = () => {
     return <Text>{error.data.message}</Text>;
   }
 
+  if (users?.length === 0) {
+    return <Text>There are no users</Text>;
+  }
+
   return (
     <FlatList data={users} renderItem={renderItem} keyExtractor={(item: iUser) => item.name} />
   );

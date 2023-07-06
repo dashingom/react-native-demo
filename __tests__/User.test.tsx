@@ -15,6 +15,16 @@ describe('Todos', () => {
     });
   });
 
+  test('renders no users message when API returns 0 results', async () => {
+    server.use(rest.get(`${config.apiUrl}/users`, (_req, res, ctx) => res(ctx.json([]))));
+
+    renderWithProviders(<User />);
+
+    await waitFor(() => {
+      expect(screen.getByText('There are no users')).toBeTruthy();
+    });
+  });
+
   test('displays a error', async () => {
     const errorMsg = 'an error has occurred';
     // force msw to return error response
