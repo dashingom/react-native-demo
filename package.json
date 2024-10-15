@@ -1,5 +1,6 @@
 {
   "name": "rndemo",
+  "description": "React NAtive Demo includes Okta Intgration, BLUI components, Redux, Navigation, etc.",
   "version": "0.0.1",
   "private": true,
   "scripts": {
